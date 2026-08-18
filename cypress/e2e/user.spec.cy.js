@@ -7,16 +7,22 @@ describe('Orange HRM Tests', () => {
     passwordField: "[name= 'password']",
     loginButton: "[type='submit']",
     dashboardGrid: ".orangehrm-dashboard-grid",
-    wrongCredentialAlert: "[role = 'alert']"
+    wrongCredentialAlert: "[role = 'alert']",
+    myInfoButton: '[href="/web/index.php/pim/viewMyDetails"]',
+    firstNameField: '[name="firstName"]',
+    lastNameField: '[name="lastName"]',
+    nickNameField: '.oxd-input--active',
   }
 
-  it('Login - Success', () => {
+  it.only('User Info Update - Success', () => {
     cy.visit('/auth/login')
     cy.get(selectorsList.usernameField).type(userData.userSuccess.username)
     cy.get(selectorsList.passwordField).type(userData.userSuccess.password)
     cy.get(selectorsList.loginButton).click()
     cy.location('pathname').should('equal', '/web/index.php/dashboard/index')
     cy.get(selectorsList.dashboardGrid)
+    cy.get(selectorsList.myInfoButton).click()
+    cy.get(selectorsList.nickNameField).eq(4).type("KaueTest")
   })
   it('Login - Fail', () => {
     cy.visit('/auth/login')
